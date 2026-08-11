@@ -414,9 +414,9 @@ footer strong{ color:var(--ink); }
 .btn-full { width: 100%; padding: 14px; margin-top: 10px; font-size: 16px; }
 .btn-google { background: #fff; color: var(--ink); border: 1px solid var(--line); margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
-/* FULLSCREEN FORUM CHAT */
+/* FULLSCREEN FORUM CHAT (100dvh for mobile keyboard fix) */
 #page-forum.app-page.active {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: var(--bg); display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: 9999; background: var(--bg); display: flex; flex-direction: column;
 }
 .chat-container-fs { display: flex; flex-direction: column; height: 100%; width: 100%; background: #fff; }
 .chat-header {
@@ -428,7 +428,7 @@ footer strong{ color:var(--ink); }
 .online-users { display: flex; gap: 5px; margin-top: 5px; justify-content: flex-end; align-items: center; }
 .online-dot { width: 30px; height: 30px; border-radius: 50%; background-size: cover; background-position: center; border: 2px solid #fff; cursor: pointer; }
 .chat-body { flex: 1; padding: 25px; overflow-y: auto; background: var(--bg); display: flex; flex-direction: column; gap: 15px; }
-.chat-msg-wrapper { display: flex; gap: 12px; max-width: 75%; align-items: flex-start; }
+.chat-msg-wrapper { display: flex; gap: 12px; max-width: 75%; align-items: flex-start; position: relative; }
 .chat-msg-wrapper.me { align-self: flex-end; flex-direction: row-reverse; }
 .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: #e5e2db; background-size: cover; background-position: center; flex-shrink: 0; cursor: pointer; }
 .chat-msg-content { display: flex; flex-direction: column; }
@@ -438,13 +438,24 @@ footer strong{ color:var(--ink); }
 .chat-msg { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; background: #fff; border: 1px solid var(--line); word-break: break-word; }
 .chat-msg-wrapper.me .chat-msg { background: var(--ink); color: #fff; border-color: var(--ink); border-bottom-right-radius: 4px; }
 .chat-msg-wrapper.other .chat-msg { border-bottom-left-radius: 4px; }
+.chat-reply-quote { border-left: 3px solid var(--accent); padding: 5px 10px; margin-bottom: 5px; background: rgba(0,0,0,0.05); border-radius: 4px; font-size: 12px; color: var(--muted); }
+.chat-msg-wrapper.me .chat-reply-quote { background: rgba(255,255,255,0.1); border-left-color: #fff; color: #ddd; }
+.chat-reply-quote strong { color: var(--accent); }
+.chat-msg-wrapper.me .chat-reply-quote strong { color: #fff; }
+.btn-reply { position: absolute; top: 0; right: -35px; background: #fff; border: 1px solid var(--line); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+.chat-msg-wrapper:hover .btn-reply { opacity: 1; }
+.chat-msg-wrapper.me .btn-reply { right: auto; left: -35px; }
+.typing-indicator { padding: 0 25px 10px; font-size: 12px; color: var(--muted); font-style: italic; min-height: 18px; }
 .chat-footer {
   padding: 15px 25px; border-top: 1px solid var(--line); background: var(--card); display: flex; align-items: flex-end; gap: 10px; position: relative; flex-wrap: wrap;
 }
 .chat-preview {
   display: none; position: absolute; bottom: 100%; left: 25px; background: #fff; padding: 10px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px;
 }
-.chat-preview img, .chat-preview video { height: 60px; border-radius: 8px; object-fit: cover; }
+.chat-preview img { height: 60px; border-radius: 8px; object-fit: cover; }
+.chat-reply-preview { display: none; position: absolute; bottom: 100%; left: 0; right: 0; background: #f0f0f0; padding: 10px 25px; border-bottom: 1px solid var(--line); align-items: center; justify-content: space-between; }
+.chat-reply-preview .quote-content { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1; margin-right: 10px; }
+.chat-reply-preview .quote-content strong { color: var(--accent); }
 .btn-icon { width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--line); background: #fff; cursor: pointer; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0;}
 .chat-footer input[type="text"] { flex: 1; padding: 14px; border: 1px solid var(--line); border-radius: 24px; outline: none; min-width: 150px; }
 .btn-send { background: var(--accent); color: white; border: none; }
@@ -453,7 +464,7 @@ footer strong{ color:var(--ink); }
 .detail-hero { height: 350px; background: #151515; border-radius: 24px; margin: 20px 0 30px; display: flex; align-items: flex-end; padding: 40px; color: #fff; position: relative; overflow: hidden; background-size: cover; background-position: center; background-color: #e5e2db; max-width: 100%; }
 .detail-hero:before { content: ""; position: absolute; width: 300px; height: 300px; background: var(--accent); filter: blur(40px); opacity: 0.5; top: -50px; right: -50px; border-radius: 50%; }
 .detail-content { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; max-width: 100%; min-width: 0; }
-.detail-content > div { min-width: 0; }
+.detail-content > div { min-width: 0; overflow: hidden; }
 .detail-info h1 { font-size: clamp(28px, 4vw, 48px); margin: 0 0 10px; letter-spacing: -2px; position: relative; z-index: 2; word-break: break-word; }
 .detail-box { background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 24px; margin-bottom: 20px; }
 .detail-box h3 { margin-top: 0; font-size: 18px; }
@@ -576,7 +587,7 @@ footer strong{ color:var(--ink); }
       <a href="#events" onclick="navigateToPage('home')">Events</a>
       <a href="#articles" onclick="navigateToPage('articles-list')">Articles</a>
       <a href="#how" onclick="navigateToPage('home')">How it works</a>
-      <a href="#" onclick="navigateToPage('create-event')">For organizers</a>
+      <a href="#" onclick="goToCreateEvent()">For organizers</a>
     </div>
     <div class="auth-group" id="nav-logged-out">
       <button class="navbtn outline" onclick="openModal('login-modal')">
@@ -598,8 +609,8 @@ footer strong{ color:var(--ink); }
           <a onclick="openMyProfile()">
             <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg> Lihat Profile
           </a>
-          <a onclick="showToast('Menghubungkan ke Customer Service...')">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> CS
+          <a onclick="openModal('donate-modal')">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Donate
           </a>
           <a onclick="doLogout()">
             <svg class="icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg> Logout
@@ -668,7 +679,7 @@ footer strong{ color:var(--ink); }
         <strong>Punya event?</strong><br>
         <span>Masukkan acara kamu ke Home Town.</span>
       </div>
-      <a onclick="navigateToPage('create-event')">Submit your event →</a>
+      <a onclick="goToCreateEvent()">Submit your event →</a>
     </div>
 
     <section class="section" id="how">
@@ -709,7 +720,7 @@ footer strong{ color:var(--ink); }
         <p>Eksplorasi cerita & panduan menarik di kotamu.</p>
       </div>
       <div id="create-article-btn-wrap" style="display:none;">
-        <button class="navbtn" onclick="navigateToPage('create-article')">
+        <button class="navbtn" onclick="goToCreateArticle()">
           <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Buat Artikel
         </button>
       </div>
@@ -830,6 +841,9 @@ footer strong{ color:var(--ink); }
           <strong id="art-detail-author-name">Penulis</strong>
           <span id="art-detail-date">12 Agustus 2026</span>
         </div>
+        <div style="margin-left: auto; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 5px;">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> <span id="art-detail-views">0</span> views
+        </div>
       </div>
       
       <div id="art-detail-thumb" class="lazy-bg" style="height: 350px; background-size: cover; background-position: center; border-radius: 16px; margin-bottom: 30px;"></div>
@@ -854,6 +868,16 @@ footer strong{ color:var(--ink); }
         </div>
       </div>
       <div class="chat-body" id="chat-messages"></div>
+      <div class="typing-indicator" id="typing-indicator"></div>
+      
+      <div class="chat-reply-preview" id="chat-reply-preview">
+        <div class="quote-content">
+          Membalas <strong id="reply-to-name"></strong><br>
+          <span id="reply-to-text"></span>
+        </div>
+        <button onclick="cancelReply()" style="background: none; border: none; cursor: pointer; font-size: 18px; color: var(--muted);">×</button>
+      </div>
+
       <div class="chat-footer">
         <div class="chat-preview" id="upload-preview">
           <img id="preview-img-tag" src="" alt="preview" style="display:none;">
@@ -863,7 +887,7 @@ footer strong{ color:var(--ink); }
           <svg class="icon icon-lg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
         <input type="file" id="file-input" style="display:none" accept="image/*" onchange="showPreview(this)">
-        <input type="text" id="chat-input" placeholder="Tulis pesan..." onkeydown="if(event.key==='Enter') sendChat()">
+        <input type="text" id="chat-input" placeholder="Tulis pesan..." oninput="handleTyping(event)" onkeydown="if(event.key==='Enter') sendChat()">
         <button class="btn-icon btn-send" onclick="sendChat()">
           <svg class="icon icon-lg" style="stroke:#fff;" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
@@ -915,7 +939,7 @@ footer strong{ color:var(--ink); }
             <div class="org-profile lazy-avatar" id="detail-org-avatar" data-bg=""></div>
             <div>
               <strong id="detail-org-name">CityCommunity</strong><br>
-              <span style="font-size: 12px; color: var(--muted);" id="detail-org-followers">1.2K Followers • Lihat Profil</span>
+              <span style="font-size: 12px; color: var(--muted);" id="detail-org-followers">0 Followers • Lihat Profil</span>
             </div>
           </div>
           <button class="navbtn outline" id="detail-follow-btn" onclick="toggleFollowOrganizer()" style="padding: 8px 16px; font-size: 13px;">Follow</button>
@@ -933,6 +957,10 @@ footer strong{ color:var(--ink); }
           <button class="navbtn outline" style="width:100%;" onclick="openMapsLink()">
             <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Lihat Peta Google Maps
           </button>
+        </div>
+        <div class="detail-box" style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 13px; color: var(--muted);">Views</span>
+          <strong id="detail-views">0</strong>
         </div>
         <button class="navbtn" id="save-event-btn" style="width:100%; margin-bottom: 10px;" onclick="toggleSaveCurrentEvent()">
           <svg class="icon" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Simpan Event
@@ -1199,6 +1227,28 @@ footer strong{ color:var(--ink); }
   </div>
 </div>
 
+<div class="modal-overlay" id="donate-modal">
+  <div class="modal" style="max-width: 450px;">
+    <span class="modal-close" onclick="closeModal('donate-modal')">×</span>
+    <h2>Donasi Hometown</h2>
+    <div style="text-align: left; font-size: 14px; line-height: 1.6; color: var(--muted); margin-bottom: 20px; max-height: 300px; overflow-y: auto;">
+      Isi donasi untuk update hometown agar bisa maju tampa donasi dari kalian hometown bukan apa-apa. 
+      <br><br>
+      <strong>Donasi ShopeePay:</strong> 082343501911<br>
+      <strong>Atas Nama:</strong> ADE SUPARMAN<br>
+      <br>
+      <strong>Dana:</strong> 082343501911<br>
+      <strong>Atas Nama:</strong> JAKA WIJAYA<br>
+      <br>
+      Terimakasih yang sudah mau donasi untuk mengembangkan website ini lebih bagus lagi.
+    </div>
+    <a href="https://wa.me/6282343501911" target="_blank" class="navbtn btn-full" style="background: #25D366; border-color: #25D366; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> 
+      Saran & Masukan via WhatsApp
+    </a>
+  </div>
+</div>
+
 <!-- ANIME.JS LIBRARY -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
@@ -1206,7 +1256,8 @@ footer strong{ color:var(--ink); }
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, onSnapshot, query, where, getDoc, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, onSnapshot, query, where, getDoc, orderBy, limit, serverTimestamp, updateDoc, increment, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgCQBFaXtPjpBRzxP1lddrudOdt9SHLU8",
@@ -1222,6 +1273,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
+const messaging = getMessaging(app);
 
 window.auth = auth;
 window.db = db;
@@ -1231,6 +1283,7 @@ window.provider = provider;
 let currentUser = null;
 let savedEvents = [];
 let createdEvents = [];
+let createdArticles = [];
 let eventsCache = [];
 let articlesCache = [];
 let activeEvent = {};
@@ -1238,6 +1291,9 @@ let activeArticle = {};
 let viewingTabMode = "saved"; 
 let viewingProfileMode = "my"; 
 let tempAvatarEditUrl = "";
+let currentViewingProfileId = null;
+let activeReply = null;
+let isInitialLoad = { events: true, articles: true, messages: true, followers: true };
 
 // --- AVATAR GENERATOR ---
 window.generateMusicAvatarSvg = function(seedStr) {
@@ -1276,17 +1332,69 @@ window.compressImage = function(file, maxWidth = 800, quality = 0.7) {
   });
 }
 
+// --- DATE FORMATTER ---
+function formatTimestamp(ts) {
+  if (!ts) return "Baru saja";
+  const date = ts.toDate ? ts.toDate() : new Date(ts);
+  const now = new Date();
+  const diff = Math.abs(now - date);
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  
+  if (days === 0) {
+    return "Hari ini, " + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  } else if (days === 1) {
+    return "Kemarin, " + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  } else {
+    return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) + ", " + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  }
+}
+
+// --- LOGIN VALIDATION HELPER ---
+window.requireLogin = function() {
+  if(!currentUser) {
+    showToast('Silakan login terlebih dahulu.');
+    openModal('login-modal');
+    return false;
+  }
+  return true;
+}
+
+// --- FCM NOTIFICATIONS ---
+async function setupNotifications() {
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      const token = await getToken(messaging, {
+        vapidKey: "BLOQOq7ZaSx5gkSrFhjE2fllGw4rokJPLmE1who7VM755xoGvcBD3tWx476bvUxNamoWxwMlrFT4iO2dRMpwUuc"
+      });
+      if (token && currentUser) {
+        await updateDoc(doc(db, "users", currentUser.uid), { fcmToken: token });
+      }
+    }
+  } catch(e) { console.error("Notification error:", e); }
+}
+
+function showNotification(title, body) {
+  if (Notification.permission === 'granted') {
+    new Notification(title, { body });
+  }
+}
+
 // --- AUTH STATE LISTENER ---
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     const userDocRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(userDocRef);
+    let prevFollowers = 0;
+    
     if (userDoc.exists()) {
       currentUser = userDoc.data();
+      prevFollowers = currentUser.followers ? currentUser.followers.length : 0;
     } else {
       currentUser = {
         uid: user.uid, name: user.displayName || "User", email: user.email,
-        bio: "Pecinta musik & event enthusiast.", avatar: user.photoURL || generateMusicAvatarSvg(user.uid)
+        bio: "Pecinta musik & event enthusiast.", avatar: user.photoURL || generateMusicAvatarSvg(user.uid),
+        followers: [], following: []
       };
       await setDoc(userDocRef, currentUser);
     }
@@ -1296,18 +1404,27 @@ onAuthStateChanged(auth, async (user) => {
     const savedSnap = await getDocs(savedRef);
     savedEvents = savedSnap.docs.map(d => d.data());
     
-    const createdRef = query(collection(db, "events"), where("orgId", "==", user.uid));
-    const createdSnap = await getDocs(createdRef);
-    createdEvents = createdSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-
     updateAuthUI();
+    setupNotifications();
+    
+    // Listen for follower changes
+    onSnapshot(doc(db, "users", user.uid), (doc) => {
+      if(!isInitialLoad.followers) {
+        const newFollowers = doc.data().followers ? doc.data().followers.length : 0;
+        if(newFollowers > prevFollowers) {
+          showNotification("Pengikut Baru!", "Seseorang mulai mengikuti Anda.");
+        }
+        prevFollowers = newFollowers;
+      }
+      isInitialLoad.followers = false;
+    });
+
     if(document.getElementById('page-profile').classList.contains('active') && viewingProfileMode === "my") {
         openMyProfile();
     }
   } else {
     currentUser = null;
     savedEvents = [];
-    createdEvents = [];
     updateAuthUI();
   }
 });
@@ -1315,6 +1432,12 @@ onAuthStateChanged(auth, async (user) => {
 // --- FIRESTORE REAL-TIME LISTENERS ---
 const eventsQuery = query(collection(db, "events"));
 onSnapshot(eventsQuery, (snapshot) => {
+  snapshot.docChanges().forEach(change => {
+    if (change.type === 'added' && !isInitialLoad.events && !change.doc.metadata.hasPendingWrites) {
+      showNotification("Event Baru!", change.doc.data().title);
+    }
+  });
+  isInitialLoad.events = false;
   eventsCache = [];
   snapshot.forEach(doc => { eventsCache.push({ id: doc.id, ...doc.data() }); });
   renderEventsList();
@@ -1323,6 +1446,12 @@ onSnapshot(eventsQuery, (snapshot) => {
 
 const articlesQuery = query(collection(db, "articles"));
 onSnapshot(articlesQuery, (snapshot) => {
+  snapshot.docChanges().forEach(change => {
+    if (change.type === 'added' && !isInitialLoad.articles && !change.doc.metadata.hasPendingWrites) {
+      showNotification("Artikel Baru!", change.doc.data().title);
+    }
+  });
+  isInitialLoad.articles = false;
   articlesCache = [];
   snapshot.forEach(doc => { articlesCache.push({ id: doc.id, ...doc.data() }); });
   renderArticlesList(articlesCache);
@@ -1335,13 +1464,29 @@ onSnapshot(messagesQuery, (snapshot) => {
   const chatBody = document.getElementById('chat-messages');
   if(!chatBody) return;
   chatBody.innerHTML = "";
+  snapshot.docChanges().forEach(change => {
+    if (change.type === 'added' && !isInitialLoad.messages && !change.doc.metadata.hasPendingWrites) {
+      const msg = change.doc.data();
+      if(currentUser && msg.senderId !== currentUser.uid) {
+        showNotification("Pesan Baru di Forum", `${msg.senderName}: ${msg.text || '(Gambar)'}`);
+      }
+    }
+  });
+  isInitialLoad.messages = false;
+  
   snapshot.forEach(doc => {
     const msg = doc.data();
     const wrapper = document.createElement('div');
     const isMe = currentUser && msg.senderId === currentUser.uid;
     wrapper.className = isMe ? 'chat-msg-wrapper me' : 'chat-msg-wrapper other';
+    wrapper.setAttribute("data-msg-id", doc.id);
     
-    let msgContent = "";
+    let replyHtml = '';
+    if(msg.replyTo) {
+      replyHtml = `<div class="chat-reply-quote"><strong>${msg.replyTo.senderName}</strong><br>${msg.replyTo.text || '(Gambar)'}</div>`;
+    }
+    
+    let msgContent = replyHtml;
     if(msg.imageUrl) {
       msgContent += `<img src="${msg.imageUrl}" style="max-width:100%; border-radius:8px; margin-bottom:5px;"><br>`;
     }
@@ -1355,11 +1500,41 @@ onSnapshot(messagesQuery, (snapshot) => {
         <div class="chat-username" onclick="openUserProfileById('${msg.senderId}')">${msg.senderName}</div>
         <div class="chat-msg">${msgContent}</div>
       </div>
+      <button class="btn-reply" onclick="setReply('${doc.id}', '${msg.senderName}', '${msg.text ? msg.text.replace(/'/g, "\\'") : ''}')">
+        <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+      </button>
     `;
     chatBody.appendChild(wrapper);
   });
   chatBody.scrollTop = chatBody.scrollHeight;
   initLazyLoading();
+});
+
+// TYPING INDICATOR REAL-TIME
+let typingTimeout;
+window.handleTyping = function(e) {
+  if(!currentUser) return;
+  const typingRef = doc(db, "forum_typing", currentUser.uid);
+  setDoc(typingRef, { name: currentUser.name, ts: Date.now() });
+  
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(() => {
+    deleteDoc(typingRef);
+  }, 2000);
+}
+
+onSnapshot(collection(db, "forum_typing"), (snapshot) => {
+  let typers = [];
+  snapshot.forEach(d => {
+    const data = d.data();
+    if (Date.now() - data.ts < 3000 && d.id !== currentUser?.uid) {
+      typers.push(data.name);
+    }
+  });
+  const indicator = document.getElementById('typing-indicator');
+  if(indicator) {
+    indicator.innerText = typers.length > 0 ? `${typers.join(', ')} sedang mengetik...` : '';
+  }
 });
 
 // ONLINE USERS REAL-TIME
@@ -1395,7 +1570,7 @@ function renderEventsList() {
     article.innerHTML = `
       <div class="poster lazy-bg" data-bg="${ev.bgImg}">
         <div>
-          <div class="date">${ev.datetime}</div>
+          <div class="date">${formatTimestamp(ev.createdAt)}</div>
           <div class="big">${ev.title.substring(0, 10).toUpperCase()}</div>
         </div>
       </div>
@@ -1426,7 +1601,7 @@ function renderHomeArticlesPreview() {
           <span class="tag" style="margin-bottom: 8px;">${art.category}</span>
           <h3>${art.title}</h3>
         </div>
-        <div style="font-size: 12px; color: var(--muted); margin-top: 10px;">${art.date} • Oleh ${art.author}</div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 10px;">${formatTimestamp(art.createdAt)} • Oleh ${art.author}</div>
       </div>
     `;
     container.appendChild(card);
@@ -1453,7 +1628,7 @@ function renderArticlesList(data) {
           <span class="tag" style="margin-bottom: 8px;">${art.category}</span>
           <h3>${art.title}</h3>
         </div>
-        <div style="font-size: 12px; color: var(--muted); margin-top: 10px;">${art.date} • Oleh ${art.author}</div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 10px;">${formatTimestamp(art.createdAt)} • Oleh ${art.author}</div>
       </div>
     `;
     container.appendChild(card);
@@ -1511,6 +1686,13 @@ window.navigateToPage = function(pageId) {
   executePageSwitch(pageId, true);
 }
 
+window.goToCreateEvent = function() {
+  if(requireLogin()) navigateToPage('create-event');
+}
+window.goToCreateArticle = function() {
+  if(requireLogin()) navigateToPage('create-article');
+}
+
 function setPageVisible(pageId) {
   document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active'));
   document.getElementById('page-' + pageId).classList.add('active');
@@ -1519,7 +1701,6 @@ function setPageVisible(pageId) {
   setTimeout(initLazyLoading, 100);
 }
 
-// --- LAZY LOADING ---
 function initLazyLoading() {
   const lazyBgs = document.querySelectorAll('.lazy-bg:not(.lazy-loaded)');
   const lazyAvatars = document.querySelectorAll('.lazy-avatar:not(.lazy-loaded)');
@@ -1541,7 +1722,6 @@ function initLazyLoading() {
   lazyAvatars.forEach(el => observer.observe(el));
 }
 
-// --- ARTICLES FILTER ---
 window.filterArticles = function() {
   const query = document.getElementById('article-search-input').value.toLowerCase();
   const cat = document.getElementById('article-category-filter').value;
@@ -1558,19 +1738,22 @@ function checkArticleButtonVisibility() {
   if(currentUser) { btnWrap.style.display = 'block'; } else { btnWrap.style.display = 'none'; }
 }
 
-// --- EVENT DETAIL ---
-window.openEventDetail = function(id) {
+window.openEventDetail = async function(id) {
   const ev = eventsCache.find(e => e.id === id);
   if(!ev) return;
   activeEvent = ev;
   
+  const eventRef = doc(db, "events", id);
+  updateDoc(eventRef, { views: increment(1) });
+  
   document.getElementById('detail-title').innerText = ev.title;
-  document.getElementById('detail-datetime').innerText = ev.datetime;
+  document.getElementById('detail-datetime').innerText = formatTimestamp(ev.createdAt);
   document.getElementById('detail-loc-name').innerText = ev.location;
   document.getElementById('detail-price').innerText = ev.price;
   document.getElementById('detail-tag').innerText = ev.tag;
   document.getElementById('detail-chip-cat').innerText = ev.tag;
   document.getElementById('detail-desc').innerText = ev.desc;
+  document.getElementById('detail-views').innerText = (ev.views || 0) + 1;
   
   const heroBg = document.getElementById('detail-hero-bg');
   heroBg.classList.remove('lazy-loaded'); heroBg.style.backgroundImage = 'none'; heroBg.setAttribute('data-bg', ev.bgImg);
@@ -1601,6 +1784,25 @@ window.openEventDetail = function(id) {
   if(currentUser && ev.orgId === currentUser.uid) { creatorMenu.style.display = 'block'; } 
   else { creatorMenu.style.display = 'none'; }
 
+  const followBtn = document.getElementById('detail-follow-btn');
+  if(currentUser && ev.orgId !== currentUser.uid) {
+    followBtn.style.display = 'block';
+    const isFollowing = currentUser.following && currentUser.following.includes(ev.orgId);
+    followBtn.innerText = isFollowing ? 'Following' : 'Follow';
+    followBtn.className = isFollowing ? 'navbtn outline' : 'navbtn';
+  } else {
+    followBtn.style.display = 'none';
+  }
+  
+  try {
+    const orgDoc = await getDoc(doc(db, "users", ev.orgId));
+    if(orgDoc.exists()) {
+      const orgData = orgDoc.data();
+      const flw = orgData.followers ? orgData.followers.length : 0;
+      document.getElementById('detail-org-followers').innerText = `${flw} Followers • Lihat Profil`;
+    }
+  } catch(e) {}
+
   navigateToPage('detail-event');
 }
 
@@ -1608,10 +1810,32 @@ window.openOrganizerProfile = function() {
   if(activeEvent.orgId) openUserProfileById(activeEvent.orgId);
 }
 
+window.toggleFollowOrganizer = async function() {
+  if(!requireLogin()) return;
+  const targetUid = activeEvent.orgId;
+  const myRef = doc(db, "users", currentUser.uid);
+  const targetRef = doc(db, "users", targetUid);
+  
+  const isFollowing = currentUser.following && currentUser.following.includes(targetUid);
+  if(isFollowing) {
+    await updateDoc(myRef, { following: arrayRemove(targetUid) });
+    await updateDoc(targetRef, { followers: arrayRemove(currentUser.uid) });
+    currentUser.following = currentUser.following.filter(id => id !== targetUid);
+    showToast('Berhenti mengikuti.');
+  } else {
+    await updateDoc(myRef, { following: arrayUnion(targetUid) });
+    await updateDoc(targetRef, { followers: arrayUnion(currentUser.uid) });
+    currentUser.following = currentUser.following || [];
+    currentUser.following.push(targetUid);
+    showToast('Berhasil mengikuti!');
+  }
+  openEventDetail(activeEvent.id); 
+}
+
 window.openMapsLink = function() { window.open(activeEvent.mapsUrl || "https://maps.app.goo.gl", '_blank'); }
 
 window.toggleSaveCurrentEvent = async function() {
-  if(!currentUser) { showToast('Silakan login dulu'); return; }
+  if(!requireLogin()) return;
   const savedRef = doc(db, "users", currentUser.uid, "savedEvents", activeEvent.id);
   if(savedEvents.some(ev => ev.id === activeEvent.id)) {
     await deleteDoc(savedRef);
@@ -1636,19 +1860,21 @@ function updateSaveButtonUI() {
   }
 }
 
-// --- ARTICLE DETAIL ---
-window.openArticleDetail = function(id) {
+window.openArticleDetail = async function(id) {
   const art = articlesCache.find(a => a.id === id);
   if(!art) return;
   activeArticle = art;
   
+  const artRef = doc(db, "articles", id);
+  updateDoc(artRef, { views: increment(1) });
+  
   document.getElementById('art-detail-title').innerText = art.title;
   document.getElementById('art-detail-tag').innerText = art.category;
   document.getElementById('art-detail-content').innerText = art.content;
-  document.getElementById('art-detail-date').innerText = art.date;
+  document.getElementById('art-detail-date').innerText = formatTimestamp(art.createdAt);
   document.getElementById('art-detail-author-name').innerText = art.author;
+  document.getElementById('art-detail-views').innerText = (art.views || 0) + 1;
   
-  // Make author meta clickable
   const authorMeta = document.getElementById('article-author-meta');
   if(art.authorId) {
     authorMeta.style.cursor = 'pointer';
@@ -1689,7 +1915,6 @@ window.openArticleDetail = function(id) {
   navigateToPage('article-detail');
 }
 
-// --- CREATOR MENU LOGIC ---
 window.toggleCreatorMenu = function(id) { document.getElementById(id).classList.toggle('active'); }
 
 document.addEventListener('click', function(e) {
@@ -1701,7 +1926,6 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// --- EDIT EVENT ---
 window.navigateEditEvent = function() {
   if(!activeEvent.id) return;
   document.getElementById('edit-ce-title').value = activeEvent.title;
@@ -1747,7 +1971,6 @@ window.saveEventChanges = async function() {
   });
 }
 
-// --- DELETE EVENT ---
 window.deleteCurrentEvent = async function() {
   if(!activeEvent.id) return;
   if(confirm('Yakin ingin menghapus event ini?')) {
@@ -1756,7 +1979,6 @@ window.deleteCurrentEvent = async function() {
   }
 }
 
-// --- EDIT ARTICLE ---
 window.navigateEditArticle = function() {
   if(!activeArticle.id) return;
   document.getElementById('edit-art-title').value = activeArticle.title;
@@ -1782,7 +2004,6 @@ window.saveArticleChanges = async function() {
   });
 }
 
-// --- DELETE ARTICLE ---
 window.deleteCurrentArticle = async function() {
   if(!activeArticle.id) return;
   if(confirm('Yakin ingin menghapus artikel ini?')) {
@@ -1791,7 +2012,6 @@ window.deleteCurrentArticle = async function() {
   }
 }
 
-// --- CREATE EVENT ---
 window.toggleTicketPrice = function(select) {
   const priceGroup = document.getElementById('ticket-price-group');
   if (select.value === 'Berbayar') { priceGroup.style.display = 'block'; } else { priceGroup.style.display = 'none'; }
@@ -1811,7 +2031,7 @@ window.addMerchInputRow = function() {
 }
 
 window.submitNewEvent = async function() {
-  if(!currentUser) { showToast('Silakan login dulu'); return; }
+  if(!requireLogin()) return;
   const title = document.getElementById('ce-title').value.trim();
   const category = document.getElementById('ce-category').value;
   const location = document.getElementById('ce-location').value.trim();
@@ -1841,15 +2061,15 @@ window.submitNewEvent = async function() {
       }
     }
     const newObj = {
-      title, datetime: "Baru Saja", location, price: priceText, tag: category, mapsUrl: maps, desc, bgImg: photoBg, 
-      orgName: currentUser.name, orgAvatar: currentUser.avatar, orgId: currentUser.uid, merchList
+      title, location, price: priceText, tag: category, mapsUrl: maps, desc, bgImg: photoBg, 
+      orgName: currentUser.name, orgAvatar: currentUser.avatar, orgId: currentUser.uid, merchList,
+      createdAt: serverTimestamp(), views: 0
     };
     await addDoc(collection(db, "events"), newObj);
     showToast('Event berhasil dipublikasikan!'); navigateToPage('home');
   });
 }
 
-// --- CREATE ARTICLE ---
 window.addBannerInputRow = function(containerId) {
   const container = document.getElementById(containerId);
   const rowId = 'banner_row_' + Date.now() + Math.random().toString(36).substring(7);
@@ -1863,7 +2083,7 @@ window.addBannerInputRow = function(containerId) {
 }
 
 window.submitNewArticle = async function() {
-  if(!currentUser) { showToast('Silakan login dulu'); return; }
+  if(!requireLogin()) return;
   const title = document.getElementById('art-title').value.trim();
   const category = document.getElementById('art-category').value;
   const content = document.getElementById('art-content').value.trim();
@@ -1885,15 +2105,14 @@ window.submitNewArticle = async function() {
       }
     }
     const newArt = {
-      title, category, date: "Hari ini", author: currentUser.name, authorId: currentUser.uid,
-      thumb, content, banners
+      title, category, author: currentUser.name, authorId: currentUser.uid,
+      thumb, content, banners, createdAt: serverTimestamp(), views: 0
     };
     await addDoc(collection(db, "articles"), newArt);
     showToast('Artikel berhasil dipublikasikan!'); navigateToPage('articles-list');
   });
 }
 
-// --- TOAST & UPLOAD OVERLAY ---
 window.showToast = function(message) {
   const container = document.getElementById('toast-container');
   const toast = document.createElement('div');
@@ -1921,7 +2140,6 @@ function simulateUploadProgress(onComplete) {
   }, 80);
 }
 
-// --- MODAL & AUTH ---
 window.openModal = function(id) { document.getElementById(id).classList.add('active'); }
 window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
 
@@ -1950,7 +2168,8 @@ window.doRegister = async function() {
     await updateProfile(userCredential.user, { displayName: name });
     const userData = {
       uid: userCredential.user.uid, name: name, email: email,
-      bio: "Pecinta musik & event enthusiast.", avatar: generateMusicAvatarSvg(userCredential.user.uid)
+      bio: "Pecinta musik & event enthusiast.", avatar: generateMusicAvatarSvg(userCredential.user.uid),
+      followers: [], following: []
     };
     await setDoc(doc(db, "users", userCredential.user.uid), userData);
     closeModal('register-modal'); showToast('Akun berhasil dibuat!');
@@ -1973,27 +2192,55 @@ function updateAuthUI() {
   }
 }
 
-// --- PROFILE LOGIC ---
 window.openMyProfile = function() {
-  if(!currentUser) return;
+  if(!requireLogin()) return;
   viewingProfileMode = "my";
+  currentViewingProfileId = currentUser.uid;
   createdEvents = eventsCache.filter(e => e.orgId === currentUser.uid);
-  renderProfileData(currentUser.name, currentUser.email, currentUser.bio, currentUser.avatar, 0, false, false);
+  createdArticles = articlesCache.filter(a => a.authorId === currentUser.uid);
+  renderProfileData(currentUser.name, currentUser.email, currentUser.bio, currentUser.avatar, currentUser.followers ? currentUser.followers.length : 0, false, false);
   navigateToPage('profile');
 }
 
 window.openUserProfileById = async function(uid) {
+  if(!requireLogin()) return;
   if(!uid) return;
+  if(currentUser && uid === currentUser.uid) { openMyProfile(); return; }
   try {
     const userDoc = await getDoc(doc(db, "users", uid));
     if(userDoc.exists()) {
       const userData = userDoc.data();
       viewingProfileMode = "other";
+      currentViewingProfileId = uid;
       createdEvents = eventsCache.filter(e => e.orgId === uid);
-      renderProfileData(userData.name, userData.email, userData.bio, userData.avatar, 0, true, false);
+      createdArticles = articlesCache.filter(a => a.authorId === uid);
+      const isFollowing = currentUser && currentUser.following && currentUser.following.includes(uid);
+      renderProfileData(userData.name, userData.email, userData.bio, userData.avatar, userData.followers ? userData.followers.length : 0, true, isFollowing);
       navigateToPage('profile');
     } else { showToast('Profil tidak ditemukan.'); }
   } catch(e) { showToast('Error mengambil profil.'); }
+}
+
+window.toggleGlobalFollow = async function() {
+  if(!requireLogin()) return;
+  const targetUid = currentViewingProfileId;
+  const myRef = doc(db, "users", currentUser.uid);
+  const targetRef = doc(db, "users", targetUid);
+  
+  const isFollowing = currentUser.following && currentUser.following.includes(targetUid);
+  if(isFollowing) {
+    await updateDoc(myRef, { following: arrayRemove(targetUid) });
+    await updateDoc(targetRef, { followers: arrayRemove(currentUser.uid) });
+    currentUser.following = currentUser.following.filter(id => id !== targetUid);
+    showToast('Berhenti mengikuti.');
+  } else {
+    await updateDoc(myRef, { following: arrayUnion(targetUid) });
+    await updateDoc(targetRef, { followers: arrayUnion(currentUser.uid) });
+    currentUser.following = currentUser.following || [];
+    currentUser.following.push(targetUid);
+    showToast('Berhasil mengikuti!');
+  }
+  openUserProfileById(targetUid);
 }
 
 window.previewAvatarEdit = async function(input) {
@@ -2020,23 +2267,42 @@ window.switchProfileTab = function(tab, e) {
 function renderProfileTabContent() {
   const container = document.getElementById('profile-tab-content');
   container.innerHTML = "";
-  const listToDisplay = (viewingTabMode === 'saved') ? savedEvents : createdEvents;
+  let listToDisplay = [];
+  if(viewingTabMode === 'saved') {
+    listToDisplay = savedEvents;
+  } else {
+    listToDisplay = [...createdEvents, ...createdArticles];
+  }
+  
   if(listToDisplay.length === 0) {
-    container.innerHTML = `<div style="grid-column: span 2; text-align:center; padding: 40px; color: var(--muted);">Belum ada event di sini.</div>`;
+    container.innerHTML = `<div style="grid-column: span 2; text-align:center; padding: 40px; color: var(--muted);">Belum ada postingan di sini.</div>`;
     return;
   }
-  listToDisplay.forEach(ev => {
+  listToDisplay.forEach(item => {
     const card = document.createElement('article');
-    card.className = 'event'; card.onclick = () => openEventDetail(ev.id);
-    card.innerHTML = `
-      <div class="poster lazy-bg" data-bg="${ev.bgImg}">
-        <div><div class="date">${ev.datetime}</div><div class="big">${ev.title.substring(0, 10).toUpperCase()}</div></div>
-      </div>
-      <div class="eventbody">
-        <h3>${ev.title}</h3>
-        <div class="meta">📍 ${ev.location}<br>🎟 ${ev.price}</div>
-        <span class="tag">${ev.tag}</span>
-      </div>`;
+    card.className = 'event';
+    if(item.mapsUrl) { 
+      card.onclick = () => openEventDetail(item.id);
+      card.innerHTML = `
+        <div class="poster lazy-bg" data-bg="${item.bgImg}">
+          <div><div class="date">${formatTimestamp(item.createdAt)}</div><div class="big">${item.title.substring(0, 10).toUpperCase()}</div></div>
+        </div>
+        <div class="eventbody">
+          <h3>${item.title}</h3>
+          <div class="meta">📍 ${item.location}<br>🎟 ${item.price}</div>
+          <span class="tag">${item.tag}</span>
+        </div>`;
+    } else { 
+      card.onclick = () => openArticleDetail(item.id);
+      card.innerHTML = `
+        <div class="article-thumb lazy-bg" data-bg="${item.thumb}" style="height: 230px;">
+        </div>
+        <div class="eventbody">
+          <h3>${item.title}</h3>
+          <div class="meta">Oleh ${item.author}</div>
+          <span class="tag">${item.category}</span>
+        </div>`;
+    }
     container.appendChild(card);
   });
   initLazyLoading();
@@ -2047,25 +2313,30 @@ function renderProfileData(name, email, bio, avatar, followersCount, showFollowB
   document.getElementById('profile-page-email').innerText = email;
   document.getElementById('profile-page-bio').innerText = bio || "Belum ada bio.";
   document.getElementById('stat-saved-count').innerText = savedEvents.length;
-  document.getElementById('stat-created-count').innerText = createdEvents.length;
+  document.getElementById('stat-created-count').innerText = createdEvents.length + createdArticles.length;
   document.getElementById('stat-followers-count').innerText = followersCount;
 
   const avatarEl = document.getElementById('profile-page-avatar');
   avatarEl.classList.remove('lazy-loaded'); avatarEl.style.backgroundImage = 'none'; avatarEl.setAttribute('data-bg', avatar);
 
-  document.getElementById('btn-edit-profile-nav').style.display = showFollowBtn ? 'none' : 'inline-block';
-  document.getElementById('btn-global-follow').style.display = showFollowBtn ? 'inline-block' : 'none';
-  document.getElementById('profile-tabs-container').style.display = showFollowBtn ? 'none' : 'flex';
+  const editBtn = document.getElementById('btn-edit-profile-nav');
+  const followBtn = document.getElementById('btn-global-follow');
+  editBtn.style.display = showFollowBtn ? 'none' : 'inline-block';
+  followBtn.style.display = showFollowBtn ? 'inline-block' : 'none';
+  
+  if(showFollowBtn) {
+    followBtn.innerText = isFollowing ? 'Following' : 'Follow';
+    followBtn.className = isFollowing ? 'navbtn outline' : 'navbtn';
+  }
+  document.getElementById('profile-tabs-container').style.display = 'flex';
 
   document.getElementById('edit-name').value = name;
   document.getElementById('edit-email').value = email;
   document.getElementById('edit-bio').value = bio;
 
-  if(!showFollowBtn) renderProfileTabContent();
-  else document.getElementById('profile-tab-content').innerHTML = `<div style="grid-column: span 2; text-align:center; padding: 30px; color: var(--muted);">Profil Publik Pengguna Komunitas</div>`;
+  renderProfileTabContent();
 }
 
-// --- FILTERS ---
 document.querySelectorAll("#category-chips .chip").forEach(chip => {
   chip.addEventListener("click", () => {
     document.querySelectorAll("#category-chips .chip").forEach(item => item.classList.remove("active"));
@@ -2088,9 +2359,22 @@ window.applyLocation = function() {
   });
 }
 
-// --- CHAT LOGIC (FIRESTORE) ---
+// --- CHAT REPLY & SEND LOGIC ---
+window.setReply = function(msgId, senderName, text) {
+  activeReply = { msgId, senderName, text };
+  document.getElementById('reply-to-name').innerText = senderName;
+  document.getElementById('reply-to-text').innerText = text || '(Gambar)';
+  document.getElementById('chat-reply-preview').style.display = 'flex';
+  document.getElementById('chat-input').focus();
+}
+
+window.cancelReply = function() {
+  activeReply = null;
+  document.getElementById('chat-reply-preview').style.display = 'none';
+}
+
 window.sendChat = async function() {
-  if(!currentUser) { showToast('Login dulu untuk chat'); return; }
+  if(!requireLogin()) return;
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   const preview = document.getElementById('upload-preview');
@@ -2100,17 +2384,28 @@ window.sendChat = async function() {
   if (preview.style.display === 'block') {
     const previewImg = document.getElementById('preview-img-tag');
     if(previewImg.style.display !== 'none' && previewImg.src) {
-      imageUrl = previewImg.src; // Sudah dikompres di showPreview
+      imageUrl = previewImg.src; 
     }
     cancelUpload();
   }
 
-  await addDoc(collection(db, "forum_messages"), {
+  const payload = {
     text, imageUrl, 
     senderId: currentUser.uid, senderName: currentUser.name, senderAvatar: currentUser.avatar,
     timestamp: serverTimestamp()
-  });
-  
+  };
+
+  if(activeReply) {
+    payload.replyTo = activeReply;
+    cancelReply();
+  }
+
+  // Hapus status typing saat mengirim
+  if(currentUser) {
+    deleteDoc(doc(db, "forum_typing", currentUser.uid));
+  }
+
+  await addDoc(collection(db, "forum_messages"), payload);
   input.value = "";
 }
 
@@ -2124,7 +2419,6 @@ window.showPreview = async function(input) {
     previewBox.style.display = 'block';
     imgTag.style.display = 'block';
     
-    // Compress image before showing preview to ensure it fits in Firestore
     try {
       const compressedUrl = await compressImage(file, 800, 0.7);
       imgTag.src = compressedUrl;
@@ -2141,7 +2435,6 @@ window.cancelUpload = function() {
   document.getElementById('preview-img-tag').src = "";
 }
 
-// --- INIT ---
 window.addEventListener('DOMContentLoaded', function() {
   setupAnimeTexts(); playInitialLoad(); initLazyLoading(); addMerchInputRow(); 
   history.replaceState({ page: 'home' }, "", "#home");
