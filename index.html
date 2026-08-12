@@ -261,19 +261,19 @@ nav{
 }
 .btn-back:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-.profile-dropdown-container { position: relative; }
-.dropdown-menu {
+.profile-dropdown-container, .forum-menu-container { position: relative; }
+.dropdown-menu, .creator-dropdown {
   display: none; position: absolute; top: 50px; right: 0; background: #fff;
   border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   min-width: 160px; z-index: 100; overflow: hidden;
 }
-.dropdown-menu.active { display: block; }
-.dropdown-menu a {
+.dropdown-menu.active, .creator-dropdown.active { display: block; }
+.dropdown-menu a, .creator-dropdown a {
   display: flex; align-items: center; gap: 10px; padding: 12px 16px; font-size: 14px; font-weight: 600;
   border-bottom: 1px solid var(--line); color: var(--ink); white-space: nowrap; cursor: pointer;
 }
-.dropdown-menu a:hover { background: #f9f9f9; }
-.dropdown-menu a:last-child { border-bottom: none; color: #e53935; }
+.dropdown-menu a:hover, .creator-dropdown a:hover { background: #f9f9f9; }
+.dropdown-menu a:last-child, .creator-dropdown a:last-child { border-bottom: none; color: #e53935; }
 
 /* HERO */
 .hero{ padding:82px 0 48px; display:grid; grid-template-columns:1.25fr .75fr; gap:50px; align-items:end; }
@@ -325,7 +325,7 @@ h1{ font-size:clamp(48px,8vw,116px); line-height:.83; letter-spacing:-7px; margi
 .event:hover{ transform:translateY(-4px); box-shadow:0 18px 40px #0000000c; }
 
 /* OPTIMIZED LAZY LOAD */
-.poster, .article-thumb, .detail-hero, .org-profile, .ig-avatar, .chat-avatar, .article-banner-img, .article-author-avatar, .online-dot {
+.poster, .article-thumb, .detail-hero, .org-profile, .ig-avatar, .chat-avatar, .article-banner-img, .article-author-avatar, .online-dot, .forum-list-avatar {
   opacity: 0; transform: scale(1.02); transition: opacity 0.3s ease, transform 0.3s ease; background-color: #e5e2db;
 }
 .lazy-loaded { opacity: 1 !important; transform: scale(1) !important; }
@@ -414,18 +414,29 @@ footer strong{ color:var(--ink); }
 .btn-full { width: 100%; padding: 14px; margin-top: 10px; font-size: 16px; }
 .btn-google { background: #fff; color: var(--ink); border: 1px solid var(--line); margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
-/* FULLSCREEN FORUM CHAT (100dvh for mobile keyboard fix) */
+/* FORUM LIST */
+.forum-list-header { display: flex; gap: 15px; margin: 20px 0; align-items: center; }
+.forum-list-header input { flex: 1; padding: 15px; border-radius: 999px; border: 1px solid var(--line); outline: none; font-size: 14px; }
+.forum-online-banner { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: #fff; border-radius: 16px; border: 1px solid var(--line); }
+.forum-online-banner .online-users { display: flex; gap: 5px; }
+.forum-list-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 60px; }
+.forum-list-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; }
+.forum-list-card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+.forum-list-avatar { width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center; flex-shrink: 0; }
+.forum-list-info { flex: 1; min-width: 0; }
+.forum-list-info h3 { margin: 0 0 5px; font-size: 16px; }
+.forum-list-info p { margin: 0; font-size: 13px; color: var(--muted); display: flex; gap: 10px; }
+
+/* FULLSCREEN FORUM CHAT */
 #page-forum.app-page.active {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: 9999; background: var(--bg); display: flex; flex-direction: column;
 }
 .chat-container-fs { display: flex; flex-direction: column; height: 100%; width: 100%; background: #fff; }
 .chat-header {
-  padding: 15px 25px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; background: var(--card); flex-wrap: wrap; gap: 15px;
+  padding: 15px 25px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; background: var(--card); flex-wrap: wrap; gap: 15px; flex-shrink: 0;
 }
 .chat-header-left { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
 .chat-header h2 { margin: 0; font-size: 18px; letter-spacing: -0.5px; }
-.chat-online-info { text-align: right; font-size: 12px; color: var(--muted); }
-.online-users { display: flex; gap: 5px; margin-top: 5px; justify-content: flex-end; align-items: center; }
 .online-dot { width: 30px; height: 30px; border-radius: 50%; background-size: cover; background-position: center; border: 2px solid #fff; cursor: pointer; }
 .chat-body { flex: 1; padding: 25px; overflow-y: auto; background: var(--bg); display: flex; flex-direction: column; gap: 15px; }
 .chat-msg-wrapper { display: flex; gap: 12px; max-width: 75%; align-items: flex-start; position: relative; }
@@ -445,9 +456,9 @@ footer strong{ color:var(--ink); }
 .btn-reply { position: absolute; top: 0; right: -35px; background: #fff; border: 1px solid var(--line); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
 .chat-msg-wrapper:hover .btn-reply { opacity: 1; }
 .chat-msg-wrapper.me .btn-reply { right: auto; left: -35px; }
-.typing-indicator { padding: 0 25px 10px; font-size: 12px; color: var(--muted); font-style: italic; min-height: 18px; }
+.typing-indicator { padding: 0 25px 10px; font-size: 12px; color: var(--muted); font-style: italic; min-height: 18px; flex-shrink: 0; }
 .chat-footer {
-  padding: 15px 25px; border-top: 1px solid var(--line); background: var(--card); display: flex; align-items: flex-end; gap: 10px; position: relative; flex-wrap: wrap;
+  padding: 15px 25px; border-top: 1px solid var(--line); background: var(--card); display: flex; align-items: flex-end; gap: 10px; position: relative; flex-wrap: wrap; flex-shrink: 0;
 }
 .chat-preview {
   display: none; position: absolute; bottom: 100%; left: 25px; background: #fff; padding: 10px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px;
@@ -477,11 +488,6 @@ footer strong{ color:var(--ink); }
 .creator-menu-container { position: absolute; top: 20px; right: 20px; z-index: 10; }
 .btn-creator-menu { background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .btn-creator-menu svg { stroke: #fff; }
-.creator-dropdown { display: none; position: absolute; top: 40px; right: 0; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); min-width: 160px; overflow: hidden; }
-.creator-dropdown.active { display: block; }
-.creator-dropdown a { display: flex; align-items: center; gap: 8px; padding: 12px 16px; font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--line); color: var(--ink); cursor: pointer; }
-.creator-dropdown a:last-child { border-bottom: none; color: #e53935; }
-.creator-dropdown a:hover { background: #f9f9f9; }
 
 /* ARTICLE AUTHOR META */
 .article-author-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
@@ -598,7 +604,7 @@ footer strong{ color:var(--ink); }
       </button>
     </div>
     <div class="auth-group" id="nav-logged-in" style="display: none;">
-      <button class="navbtn outline" onclick="navigateToPage('forum')">
+      <button class="navbtn outline" onclick="navigateToPage('forum-list')">
         <svg class="icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Forum
       </button>
       <div class="profile-dropdown-container">
@@ -707,6 +713,61 @@ footer strong{ color:var(--ink); }
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- FORUM LIST -->
+  <div id="page-forum-list" class="app-page">
+    <button class="btn-back" onclick="navigateToPage('home')">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali ke Home
+    </button>
+    <div class="section-head" style="margin-top: 20px;">
+      <div>
+        <h2>Forum Komunitas</h2>
+        <p>Mari berdiskusi dan berbagi info seputar kotamu.</p>
+      </div>
+    </div>
+    
+    <div class="forum-online-banner">
+      <div><strong id="forum-online-count">0 Online</strong></div>
+      <div class="online-users" id="forum-online-users"></div>
+    </div>
+
+    <div class="forum-list-header">
+      <input type="text" id="forum-search-input" placeholder="Cari forum berdasarkan nama atau kategori..." oninput="filterForums()">
+      <button class="btn-icon" onclick="goToCreateForum()" style="background: var(--ink); color: #fff; border-color: var(--ink);">
+        <svg class="icon icon-lg" style="stroke:#fff;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+    </div>
+
+    <div class="forum-list-container" id="forum-list-container"></div>
+  </div>
+
+  <!-- CREATE FORUM -->
+  <div id="page-create-forum" class="app-page">
+    <button class="btn-back" onclick="navigateToPage('forum-list')">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali
+    </button>
+    <div class="form-page-container">
+      <h2 style="margin-top:0; letter-spacing:-1px;">Buat Forum Baru</h2>
+      <div class="form-group">
+        <label>Judul Forum *</label>
+        <input type="text" id="cf-title" placeholder="Contoh: Festival Musik Jakarta 2026">
+      </div>
+      <div class="form-group">
+        <label>Kategori *</label>
+        <select id="cf-category">
+          <option value="Musik">Musik</option>
+          <option value="Bazar">Bazar</option>
+          <option value="Komunitas">Komunitas</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Lokasi Forum *</label>
+        <select id="cf-location"></select>
+      </div>
+      <button class="navbtn navbtn-full btn-full" onclick="submitNewForum()">Buat Forum</button>
+    </div>
   </div>
 
   <!-- ARTICLES LIST -->
@@ -857,14 +918,29 @@ footer strong{ color:var(--ink); }
     <div class="chat-container-fs">
       <div class="chat-header">
         <div class="chat-header-left">
-          <button class="btn-back" onclick="navigateToPage('home')">
+          <button class="btn-back" onclick="navigateToPage('forum-list')" style="margin: 0;">
             <svg class="icon" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back
           </button>
-          <h2>Forum HomeTown</h2>
+          <h2 id="forum-chat-title">Forum</h2>
         </div>
-        <div class="chat-online-info">
-          <div><strong id="forum-online-count">0 Online</strong></div>
-          <div class="online-users" id="forum-online-users"></div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <button class="navbtn outline" id="btn-join-forum" onclick="toggleJoinForum()" style="padding: 8px 16px; font-size: 12px;">Gabung</button>
+          <div class="forum-menu-container">
+            <button class="btn-back" style="margin: 0; padding: 8px; border-radius: 50%;" onclick="toggleForumChatMenu()">
+              <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+            </button>
+            <div class="creator-dropdown" id="forum-chat-menu" style="top: 40px; right: 0;">
+              <a onclick="shareForum()">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Bagikan Forum
+              </a>
+              <a onclick="reportForum()">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg> Laporkan
+              </a>
+              <a id="delete-forum-menu" onclick="deleteForum()" style="display:none;">
+                <svg class="icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Hapus Forum
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="chat-body" id="chat-messages"></div>
@@ -965,6 +1041,9 @@ footer strong{ color:var(--ink); }
         <button class="navbtn" id="save-event-btn" style="width:100%; margin-bottom: 10px;" onclick="toggleSaveCurrentEvent()">
           <svg class="icon" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Simpan Event
         </button>
+        <a id="detail-forum-link" href="#" target="_blank" class="navbtn outline" style="width:100%; margin-bottom: 10px; display: none; border-color: var(--accent); color: var(--accent);">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Gabung Forum Diskusi
+        </a>
         <button class="navbtn outline" style="width:100%; border-color: #ccc;" onclick="showToast('Link event berhasil disalin ke clipboard!')">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share Event Ini
         </button>
@@ -982,6 +1061,10 @@ footer strong{ color:var(--ink); }
       <div class="form-group">
         <label>Judul Event *</label>
         <input type="text" id="ce-title" placeholder="Contoh: Sunset Music Session">
+      </div>
+      <div class="form-group">
+        <label>Tanggal & Waktu Penyelenggaraan *</label>
+        <input type="datetime-local" id="ce-date">
       </div>
       <div class="form-group">
         <label>Upload Foto Event *</label>
@@ -1026,6 +1109,14 @@ footer strong{ color:var(--ink); }
         <label>Deskripsi Acara *</label>
         <textarea id="ce-desc" rows="4" placeholder="Ceritakan detail menarik tentang acaramu..."></textarea>
       </div>
+
+      <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--line); padding-top: 20px;">
+        <label>Forum Diskusi Event (Opsional)</label>
+        <p style="font-size: 12px; color: var(--muted); margin: 0 0 10px;">Isi jika ingin membuat grup diskusi untuk event ini.</p>
+        <input type="text" id="ce-forum-title" placeholder="Judul Forum (Contoh: Diskusi Sunset Music)" style="margin-bottom: 10px;">
+        <input type="url" id="ce-forum-link" placeholder="Link WhatsApp/Telegram/Zoom (Opsional)">
+      </div>
+
       <button class="navbtn navbtn-full btn-full" onclick="submitNewEvent()">Kirim Event</button>
     </div>
   </div>
@@ -1040,6 +1131,10 @@ footer strong{ color:var(--ink); }
       <div class="form-group">
         <label>Judul Event *</label>
         <input type="text" id="edit-ce-title" placeholder="Judul Event">
+      </div>
+      <div class="form-group">
+        <label>Tanggal & Waktu Penyelenggaraan *</label>
+        <input type="datetime-local" id="edit-ce-date">
       </div>
       <div class="form-group">
         <label>Ganti Foto Event (Kosongkan jika tetap)</label>
@@ -1217,12 +1312,13 @@ footer strong{ color:var(--ink); }
     <div class="form-group">
       <select id="location-select" style="font-size: 16px; padding: 15px;">
         <option value="Semua">Semua Lokasi</option>
-        <option value="Jakarta Barat">Jakarta Barat</option>
-        <option value="Jakarta Selatan">Jakarta Selatan</option>
-        <option value="Jakarta Pusat">Jakarta Pusat</option>
-        <option value="Bandung">Bandung</option>
       </select>
     </div>
+    <div id="add-loc-form" style="display:none; margin-bottom: 15px;">
+      <input type="text" id="new-loc-input" placeholder="Nama lokasi baru" style="width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px;">
+      <button class="navbtn outline btn-full" onclick="saveNewLocation()">Simpan Lokasi Baru</button>
+    </div>
+    <button class="navbtn outline btn-full" onclick="toggleAddLocationForm()" id="btn-add-loc" style="margin-bottom: 10px;">+ Tambah Lokasi Baru</button>
     <button class="navbtn btn-full" onclick="applyLocation()">Terapkan Filter</button>
   </div>
 </div>
@@ -1286,14 +1382,17 @@ let createdEvents = [];
 let createdArticles = [];
 let eventsCache = [];
 let articlesCache = [];
+let forumsCache = [];
+let locationsCache = ["Jakarta Barat", "Jakarta Selatan", "Jakarta Pusat", "Bandung"];
 let activeEvent = {};
 let activeArticle = {};
+let activeForum = {};
 let viewingTabMode = "saved"; 
 let viewingProfileMode = "my"; 
 let tempAvatarEditUrl = "";
 let currentViewingProfileId = null;
 let activeReply = null;
-let isInitialLoad = { events: true, articles: true, messages: true, followers: true };
+let isInitialLoad = { events: true, articles: true, messages: true, followers: true, forums: true };
 
 // --- AVATAR GENERATOR ---
 window.generateMusicAvatarSvg = function(seedStr) {
@@ -1347,6 +1446,13 @@ function formatTimestamp(ts) {
   } else {
     return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) + ", " + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
   }
+}
+
+function formatDateTimeInput(dateStr) {
+  if(!dateStr) return "";
+  const date = dateStr.toDate ? dateStr.toDate() : new Date(dateStr);
+  const pad = (n) => n < 10 ? '0' + n : n;
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
 // --- LOGIN VALIDATION HELPER ---
@@ -1407,7 +1513,6 @@ onAuthStateChanged(auth, async (user) => {
     updateAuthUI();
     setupNotifications();
     
-    // Listen for follower changes
     onSnapshot(doc(db, "users", user.uid), (doc) => {
       if(!isInitialLoad.followers) {
         const newFollowers = doc.data().followers ? doc.data().followers.length : 0;
@@ -1458,63 +1563,100 @@ onSnapshot(articlesQuery, (snapshot) => {
   renderHomeArticlesPreview();
 });
 
-// FORUM MESSAGES REAL-TIME
-const messagesQuery = query(collection(db, "forum_messages"), orderBy("timestamp", "asc"));
-onSnapshot(messagesQuery, (snapshot) => {
-  const chatBody = document.getElementById('chat-messages');
-  if(!chatBody) return;
-  chatBody.innerHTML = "";
+// FORUMS REAL-TIME
+const forumsQuery = query(collection(db, "forums"));
+onSnapshot(forumsQuery, (snapshot) => {
   snapshot.docChanges().forEach(change => {
-    if (change.type === 'added' && !isInitialLoad.messages && !change.doc.metadata.hasPendingWrites) {
-      const msg = change.doc.data();
-      if(currentUser && msg.senderId !== currentUser.uid) {
-        showNotification("Pesan Baru di Forum", `${msg.senderName}: ${msg.text || '(Gambar)'}`);
-      }
+    if (change.type === 'added' && !isInitialLoad.forums && !change.doc.metadata.hasPendingWrites) {
+      // Optional: showNotification("Forum Baru!", change.doc.data().title);
     }
   });
-  isInitialLoad.messages = false;
-  
-  snapshot.forEach(doc => {
-    const msg = doc.data();
-    const wrapper = document.createElement('div');
-    const isMe = currentUser && msg.senderId === currentUser.uid;
-    wrapper.className = isMe ? 'chat-msg-wrapper me' : 'chat-msg-wrapper other';
-    wrapper.setAttribute("data-msg-id", doc.id);
-    
-    let replyHtml = '';
-    if(msg.replyTo) {
-      replyHtml = `<div class="chat-reply-quote"><strong>${msg.replyTo.senderName}</strong><br>${msg.replyTo.text || '(Gambar)'}</div>`;
-    }
-    
-    let msgContent = replyHtml;
-    if(msg.imageUrl) {
-      msgContent += `<img src="${msg.imageUrl}" style="max-width:100%; border-radius:8px; margin-bottom:5px;"><br>`;
-    }
-    if(msg.text) {
-      msgContent += msg.text;
-    }
-
-    wrapper.innerHTML = `
-      <div class="chat-avatar lazy-avatar" data-bg="${msg.senderAvatar}" onclick="openUserProfileById('${msg.senderId}')"></div>
-      <div class="chat-msg-content">
-        <div class="chat-username" onclick="openUserProfileById('${msg.senderId}')">${msg.senderName}</div>
-        <div class="chat-msg">${msgContent}</div>
-      </div>
-      <button class="btn-reply" onclick="setReply('${doc.id}', '${msg.senderName}', '${msg.text ? msg.text.replace(/'/g, "\\'") : ''}')">
-        <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
-      </button>
-    `;
-    chatBody.appendChild(wrapper);
-  });
-  chatBody.scrollTop = chatBody.scrollHeight;
-  initLazyLoading();
+  isInitialLoad.forums = false;
+  forumsCache = [];
+  snapshot.forEach(doc => { forumsCache.push({ id: doc.id, ...doc.data() }); });
+  renderForumsList();
 });
+
+// LOCATIONS REAL-TIME
+onSnapshot(collection(db, "locations"), (snapshot) => {
+  locationsCache = ["Semua"];
+  snapshot.forEach(doc => { locationsCache.push(doc.data().name); });
+  populateLocationDropdowns();
+});
+
+function populateLocationDropdowns() {
+  const homeSelect = document.getElementById('location-select');
+  const forumSelect = document.getElementById('cf-location');
+  
+  if(homeSelect) {
+    homeSelect.innerHTML = locationsCache.map(loc => `<option value="${loc}">${loc}</option>`).join('');
+  }
+  if(forumSelect) {
+    forumSelect.innerHTML = locationsCache.filter(l => l !== "Semua").map(loc => `<option value="${loc}">${loc}</option>`).join('');
+  }
+}
+
+// FORUM MESSAGES REAL-TIME
+let messagesUnsub = null;
+function listenForumMessages(forumId) {
+  if(messagesUnsub) messagesUnsub();
+  const messagesQuery = query(collection(db, "forums", forumId, "messages"), orderBy("timestamp", "asc"));
+  messagesUnsub = onSnapshot(messagesQuery, (snapshot) => {
+    const chatBody = document.getElementById('chat-messages');
+    if(!chatBody) return;
+    chatBody.innerHTML = "";
+    snapshot.docChanges().forEach(change => {
+      if (change.type === 'added' && !isInitialLoad.messages && !change.doc.metadata.hasPendingWrites) {
+        const msg = change.doc.data();
+        if(currentUser && msg.senderId !== currentUser.uid) {
+          showNotification("Pesan Baru di Forum", `${msg.senderName}: ${msg.text || '(Gambar)'}`);
+        }
+      }
+    });
+    isInitialLoad.messages = false;
+    
+    snapshot.forEach(doc => {
+      const msg = doc.data();
+      const wrapper = document.createElement('div');
+      const isMe = currentUser && msg.senderId === currentUser.uid;
+      wrapper.className = isMe ? 'chat-msg-wrapper me' : 'chat-msg-wrapper other';
+      wrapper.setAttribute("data-msg-id", doc.id);
+      
+      let replyHtml = '';
+      if(msg.replyTo) {
+        replyHtml = `<div class="chat-reply-quote"><strong>${msg.replyTo.senderName}</strong><br>${msg.replyTo.text || '(Gambar)'}</div>`;
+      }
+      
+      let msgContent = replyHtml;
+      if(msg.imageUrl) {
+        msgContent += `<img src="${msg.imageUrl}" style="max-width:100%; border-radius:8px; margin-bottom:5px;"><br>`;
+      }
+      if(msg.text) {
+        msgContent += msg.text;
+      }
+
+      wrapper.innerHTML = `
+        <div class="chat-avatar lazy-avatar" data-bg="${msg.senderAvatar}" onclick="openUserProfileById('${msg.senderId}')"></div>
+        <div class="chat-msg-content">
+          <div class="chat-username" onclick="openUserProfileById('${msg.senderId}')">${msg.senderName}</div>
+          <div class="chat-msg">${msgContent}</div>
+        </div>
+        <button class="btn-reply" onclick="setReply('${doc.id}', '${msg.senderName}', '${msg.text ? msg.text.replace(/'/g, "\\'") : ''}')">
+          <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+        </button>
+      `;
+      chatBody.appendChild(wrapper);
+    });
+    chatBody.scrollTop = chatBody.scrollHeight;
+    initLazyLoading();
+  });
+}
 
 // TYPING INDICATOR REAL-TIME
 let typingTimeout;
 window.handleTyping = function(e) {
-  if(!currentUser) return;
-  const typingRef = doc(db, "forum_typing", currentUser.uid);
+  if(!currentUser || !activeForum.id) return;
+  const typingRef = doc(db, "forums", activeForum.id, "typing", currentUser.uid);
   setDoc(typingRef, { name: currentUser.name, ts: Date.now() });
   
   clearTimeout(typingTimeout);
@@ -1523,19 +1665,22 @@ window.handleTyping = function(e) {
   }, 2000);
 }
 
-onSnapshot(collection(db, "forum_typing"), (snapshot) => {
-  let typers = [];
-  snapshot.forEach(d => {
-    const data = d.data();
-    if (Date.now() - data.ts < 3000 && d.id !== currentUser?.uid) {
-      typers.push(data.name);
+function listenTypingIndicator(forumId) {
+  const typingQuery = collection(db, "forums", forumId, "typing");
+  onSnapshot(typingQuery, (snapshot) => {
+    let typers = [];
+    snapshot.forEach(d => {
+      const data = d.data();
+      if (Date.now() - data.ts < 3000 && d.id !== currentUser?.uid) {
+        typers.push(data.name);
+      }
+    });
+    const indicator = document.getElementById('typing-indicator');
+    if(indicator) {
+      indicator.innerText = typers.length > 0 ? `${typers.join(', ')} sedang mengetik...` : '';
     }
   });
-  const indicator = document.getElementById('typing-indicator');
-  if(indicator) {
-    indicator.innerText = typers.length > 0 ? `${typers.join(', ')} sedang mengetik...` : '';
-  }
-});
+}
 
 // ONLINE USERS REAL-TIME
 const onlineUsersQuery = query(collection(db, "users"), limit(4));
@@ -1634,6 +1779,156 @@ function renderArticlesList(data) {
     container.appendChild(card);
   });
   initLazyLoading();
+}
+
+// --- FORUM LIST RENDER ---
+function renderForumsList() {
+  const container = document.getElementById('forum-list-container');
+  if(!container) return;
+  container.innerHTML = "";
+  
+  const searchVal = document.getElementById('forum-search-input').value.toLowerCase();
+  const filtered = forumsCache.filter(f => 
+    f.title.toLowerCase().includes(searchVal) || 
+    (f.category && f.category.toLowerCase().includes(searchVal))
+  );
+
+  if(filtered.length === 0) {
+    container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--muted);">Belum ada forum. Buat sekarang!</div>`;
+    return;
+  }
+
+  filtered.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'forum-list-card';
+    card.onclick = () => openForumChat(f.id);
+    const initials = f.title.substring(0, 2).toUpperCase();
+    card.innerHTML = `
+      <div class="forum-list-avatar lazy-avatar" data-bg="${generateMusicAvatarSvg(f.title)}"></div>
+      <div class="forum-list-info">
+        <h3>${f.title}</h3>
+        <p>
+          <span><svg class="icon" viewBox="0 0 24 24" style="width:12px;height:12px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ${f.members ? f.members.length : 0} Anggota</span>
+          <span>📍 ${f.location || 'Indonesia'}</span>
+          <span>🏷️ ${f.category || 'Umum'}</span>
+        </p>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  initLazyLoading();
+}
+
+window.filterForums = function() {
+  renderForumsList();
+}
+
+window.goToCreateForum = function() {
+  if(!requireLogin()) return;
+  populateLocationDropdowns();
+  navigateToPage('create-forum');
+}
+
+window.submitNewForum = async function() {
+  const title = document.getElementById('cf-title').value.trim();
+  const category = document.getElementById('cf-category').value;
+  const location = document.getElementById('cf-location').value;
+  
+  if(!title) { showToast('Judul forum wajib diisi!'); return; }
+  
+  const newForum = {
+    title, category, location,
+    creatorId: currentUser.uid, creatorName: currentUser.name,
+    members: [currentUser.uid], createdAt: serverTimestamp()
+  };
+  
+  await addDoc(collection(db, "forums"), newForum);
+  showToast('Forum berhasil dibuat!');
+  navigateToPage('forum-list');
+}
+
+window.openForumChat = function(id) {
+  const f = forumsCache.find(x => x.id === id);
+  if(!f) return;
+  activeForum = f;
+  
+  document.getElementById('forum-chat-title').innerText = f.title;
+  
+  // Join/Leave button logic
+  const joinBtn = document.getElementById('btn-join-forum');
+  const isMember = f.members && f.members.includes(currentUser?.uid);
+  joinBtn.innerText = isMember ? 'Keluar' : 'Gabung';
+  joinBtn.className = isMember ? 'navbtn outline' : 'navbtn';
+  
+  // Delete menu logic
+  const delMenu = document.getElementById('delete-forum-menu');
+  if(currentUser && f.creatorId === currentUser.uid) {
+    delMenu.style.display = 'flex';
+  } else {
+    delMenu.style.display = 'none';
+  }
+  
+  isInitialLoad.messages = true;
+  listenForumMessages(id);
+  listenTypingIndicator(id);
+  navigateToPage('forum');
+}
+
+window.toggleJoinForum = async function() {
+  if(!requireLogin()) return;
+  if(!activeForum.id) return;
+  
+  const forumRef = doc(db, "forums", activeForum.id);
+  const isMember = activeForum.members && activeForum.members.includes(currentUser.uid);
+  
+  if(isMember) {
+    await updateDoc(forumRef, { members: arrayRemove(currentUser.uid) });
+    activeForum.members = activeForum.members.filter(id => id !== currentUser.uid);
+    showToast('Anda keluar dari forum.');
+  } else {
+    await updateDoc(forumRef, { members: arrayUnion(currentUser.uid) });
+    activeForum.members = activeForum.members || [];
+    activeForum.members.push(currentUser.uid);
+    showToast('Berhasil bergabung!');
+  }
+  
+  // Update UI
+  const joinBtn = document.getElementById('btn-join-forum');
+  const isMemberNow = activeForum.members.includes(currentUser.uid);
+  joinBtn.innerText = isMemberNow ? 'Keluar' : 'Gabung';
+  joinBtn.className = isMemberNow ? 'navbtn outline' : 'navbtn';
+}
+
+window.toggleForumChatMenu = function() {
+  document.getElementById('forum-chat-menu').classList.toggle('active');
+}
+
+window.shareForum = function() {
+  showToast('Link forum disalin!');
+  toggleForumChatMenu();
+}
+
+window.reportForum = function() {
+  showToast('Forum dilaporkan. Tim kami akan meninjau.');
+  toggleForumChatMenu();
+}
+
+window.deleteForum = async function() {
+  if(!activeForum.id || !currentUser) return;
+  if(activeForum.creatorId !== currentUser.uid) return;
+  
+  if(confirm('Yakin hapus forum ini? Semua pesan akan hilang.')) {
+    // Delete messages subcollection first (basic batch delete)
+    const msgsRef = collection(db, "forums", activeForum.id, "messages");
+    const msgsSnap = await getDocs(msgsRef);
+    msgsSnap.forEach(async (d) => {
+      await deleteDoc(d.ref);
+    });
+    
+    await deleteDoc(doc(db, "forums", activeForum.id));
+    showToast('Forum dihapus.');
+    navigateToPage('forum-list');
+  }
 }
 
 // --- ANIME.JS PAGE TRANSITION & INITIAL LOAD ---
@@ -1747,13 +2042,23 @@ window.openEventDetail = async function(id) {
   updateDoc(eventRef, { views: increment(1) });
   
   document.getElementById('detail-title').innerText = ev.title;
-  document.getElementById('detail-datetime').innerText = formatTimestamp(ev.createdAt);
+  document.getElementById('detail-datetime').innerText = ev.eventDate ? new Date(ev.eventDate).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }) : formatTimestamp(ev.createdAt);
   document.getElementById('detail-loc-name').innerText = ev.location;
   document.getElementById('detail-price').innerText = ev.price;
   document.getElementById('detail-tag').innerText = ev.tag;
   document.getElementById('detail-chip-cat').innerText = ev.tag;
   document.getElementById('detail-desc').innerText = ev.desc;
   document.getElementById('detail-views').innerText = (ev.views || 0) + 1;
+  
+  // Forum Link Logic
+  const forumLinkEl = document.getElementById('detail-forum-link');
+  if(ev.forumTitle && ev.forumLink) {
+    forumLinkEl.style.display = 'flex';
+    forumLinkEl.href = ev.forumLink;
+    forumLinkEl.innerHTML = `<svg class="icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Gabung "${ev.forumTitle}"`;
+  } else {
+    forumLinkEl.style.display = 'none';
+  }
   
   const heroBg = document.getElementById('detail-hero-bg');
   heroBg.classList.remove('lazy-loaded'); heroBg.style.backgroundImage = 'none'; heroBg.setAttribute('data-bg', ev.bgImg);
@@ -1918,7 +2223,7 @@ window.openArticleDetail = async function(id) {
 window.toggleCreatorMenu = function(id) { document.getElementById(id).classList.toggle('active'); }
 
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.creator-menu-container')) {
+  if (!e.target.closest('.creator-menu-container') && !e.target.closest('.forum-menu-container')) {
     document.querySelectorAll('.creator-dropdown').forEach(m => m.classList.remove('active'));
   }
   if (!e.target.closest('.profile-dropdown-container')) {
@@ -1929,6 +2234,7 @@ document.addEventListener('click', function(e) {
 window.navigateEditEvent = function() {
   if(!activeEvent.id) return;
   document.getElementById('edit-ce-title').value = activeEvent.title;
+  document.getElementById('edit-ce-date').value = activeEvent.eventDate ? formatDateTimeInput(activeEvent.eventDate) : "";
   document.getElementById('edit-ce-category').value = activeEvent.tag;
   document.getElementById('edit-ce-location').value = activeEvent.location;
   document.getElementById('edit-ce-maps').value = activeEvent.mapsUrl;
@@ -1951,6 +2257,7 @@ window.toggleEditTicketPrice = function(select) {
 
 window.saveEventChanges = async function() {
   const title = document.getElementById('edit-ce-title').value.trim();
+  const date = document.getElementById('edit-ce-date').value;
   const category = document.getElementById('edit-ce-category').value;
   const location = document.getElementById('edit-ce-location').value.trim();
   const maps = document.getElementById('edit-ce-maps').value.trim();
@@ -1959,14 +2266,14 @@ window.saveEventChanges = async function() {
   const desc = document.getElementById('edit-ce-desc').value.trim();
   const photoInput = document.getElementById('edit-ce-photo');
 
-  if(!title || !location || !maps || !desc) { showToast('Harap isi semua kolom wajib!'); return; }
+  if(!title || !location || !maps || !desc || !date) { showToast('Harap isi semua kolom wajib!'); return; }
 
   simulateUploadProgress(async () => {
     let photoBg = activeEvent.bgImg;
     if(photoInput.files.length > 0) { photoBg = await compressImage(photoInput.files[0]); }
     const priceText = ticketType === 'Gratis' ? 'Gratis' : `Rp ${parseInt(price).toLocaleString('id-ID')}`;
     const eventRef = doc(db, "events", activeEvent.id);
-    await setDoc(eventRef, { title, location, mapsUrl: maps, desc, bgImg: photoBg, price: priceText, tag: category }, { merge: true });
+    await setDoc(eventRef, { title, eventDate: date, location, mapsUrl: maps, desc, bgImg: photoBg, price: priceText, tag: category }, { merge: true });
     showToast('Event berhasil diperbarui!'); navigateToPage('home');
   });
 }
@@ -2033,6 +2340,7 @@ window.addMerchInputRow = function() {
 window.submitNewEvent = async function() {
   if(!requireLogin()) return;
   const title = document.getElementById('ce-title').value.trim();
+  const date = document.getElementById('ce-date').value;
   const category = document.getElementById('ce-category').value;
   const location = document.getElementById('ce-location').value.trim();
   const maps = document.getElementById('ce-maps').value.trim();
@@ -2040,8 +2348,10 @@ window.submitNewEvent = async function() {
   const price = document.getElementById('ce-price').value.trim();
   const desc = document.getElementById('ce-desc').value.trim();
   const photoInput = document.getElementById('ce-photo');
+  const forumTitle = document.getElementById('ce-forum-title').value.trim();
+  const forumLink = document.getElementById('ce-forum-link').value.trim();
 
-  if(!title || !location || !maps || !desc || photoInput.files.length === 0 || (ticketType === 'Berbayar' && !price)) {
+  if(!title || !location || !maps || !desc || photoInput.files.length === 0 || (ticketType === 'Berbayar' && !price) || !date) {
     showToast('Harap lengkapi semua kolom wajib!'); return;
   }
 
@@ -2061,10 +2371,16 @@ window.submitNewEvent = async function() {
       }
     }
     const newObj = {
-      title, location, price: priceText, tag: category, mapsUrl: maps, desc, bgImg: photoBg, 
+      title, eventDate: date, location, price: priceText, tag: category, mapsUrl: maps, desc, bgImg: photoBg, 
       orgName: currentUser.name, orgAvatar: currentUser.avatar, orgId: currentUser.uid, merchList,
       createdAt: serverTimestamp(), views: 0
     };
+    
+    if(forumTitle) {
+      newObj.forumTitle = forumTitle;
+      if(forumLink) newObj.forumLink = forumLink;
+    }
+    
     await addDoc(collection(db, "events"), newObj);
     showToast('Event berhasil dipublikasikan!'); navigateToPage('home');
   });
@@ -2359,6 +2675,32 @@ window.applyLocation = function() {
   });
 }
 
+window.toggleAddLocationForm = function() {
+  const form = document.getElementById('add-loc-form');
+  const btn = document.getElementById('btn-add-loc');
+  if(form.style.display === 'none') {
+    form.style.display = 'block';
+    btn.innerText = "Batal Tambah Lokasi";
+  } else {
+    form.style.display = 'none';
+    btn.innerText = "+ Tambah Lokasi Baru";
+  }
+}
+
+window.saveNewLocation = async function() {
+  const newName = document.getElementById('new-loc-input').value.trim();
+  if(!newName) { showToast('Nama lokasi tidak boleh kosong!'); return; }
+  
+  try {
+    await addDoc(collection(db, "locations"), { name: newName });
+    showToast('Lokasi baru ditambahkan!');
+    document.getElementById('new-loc-input').value = '';
+    toggleAddLocationForm();
+  } catch(e) {
+    showToast('Gagal menambahkan lokasi.');
+  }
+}
+
 // --- CHAT REPLY & SEND LOGIC ---
 window.setReply = function(msgId, senderName, text) {
   activeReply = { msgId, senderName, text };
@@ -2375,6 +2717,14 @@ window.cancelReply = function() {
 
 window.sendChat = async function() {
   if(!requireLogin()) return;
+  if(!activeForum.id) return;
+  
+  // Check if user is member
+  if(!activeForum.members || !activeForum.members.includes(currentUser.uid)) {
+    showToast('Gabung forum dulu untuk mengirim pesan!');
+    return;
+  }
+
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   const preview = document.getElementById('upload-preview');
@@ -2400,12 +2750,11 @@ window.sendChat = async function() {
     cancelReply();
   }
 
-  // Hapus status typing saat mengirim
   if(currentUser) {
-    deleteDoc(doc(db, "forum_typing", currentUser.uid));
+    deleteDoc(doc(db, "forums", activeForum.id, "typing", currentUser.uid));
   }
 
-  await addDoc(collection(db, "forum_messages"), payload);
+  await addDoc(collection(db, "forums", activeForum.id, "messages"), payload);
   input.value = "";
 }
 
@@ -2437,6 +2786,7 @@ window.cancelUpload = function() {
 
 window.addEventListener('DOMContentLoaded', function() {
   setupAnimeTexts(); playInitialLoad(); initLazyLoading(); addMerchInputRow(); 
+  populateLocationDropdowns();
   history.replaceState({ page: 'home' }, "", "#home");
 });
 </script>
